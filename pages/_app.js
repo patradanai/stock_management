@@ -5,6 +5,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../src/theme";
 import thunkMiddleware from "redux-thunk";
+import logger from "redux-logger";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -43,7 +44,7 @@ const MyApp = (props) => {
 const initStore = () => {
   return createStore(
     store,
-    composeWithDevTools(applyMiddleware(thunkMiddleware))
+    composeWithDevTools(applyMiddleware(thunkMiddleware, logger))
   );
 };
 
