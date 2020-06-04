@@ -4,8 +4,13 @@ import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../src/theme";
+import thunkMiddleware from "redux-thunk";
+import { HYDRATE, createWrapper } from "next-redux-wrapper";
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import store from "../redux/stores";
 
-export default function MyApp(props) {
+const MyApp = (props) => {
   const { Component, pageProps } = props;
 
   React.useEffect(() => {
@@ -32,7 +37,17 @@ export default function MyApp(props) {
       </ThemeProvider>
     </React.Fragment>
   );
-}
+};
+
+//makeStore function that returns a new store for every request
+const initStore = () => {
+  return createStore(
+    store,
+    composeWithDevTools(applyMiddleware(thunkMiddleware))
+  );
+};
+
+export default createWrapper(initStore).withRedux(MyApp);
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
