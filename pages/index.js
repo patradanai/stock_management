@@ -1,9 +1,11 @@
 import Head from "next/head";
-import Dashboard from "../containers/Dashboard";
+import Layout from "../layouts/Layout";
 export default function Home() {
   return (
     <div className="container">
-      <Dashboard />
+      <Layout>
+        <h1>TEST</h1>
+      </Layout>
 
       <style jsx>{`
         .container {

@@ -1,27 +1,23 @@
-import React from "react";
 import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Drawer from "@material-ui/core/Drawer";
-import Box from "@material-ui/core/Box";
+import React, { useState } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import IconButton from "@material-ui/core/IconButton";
 import Link from "@material-ui/core/Link";
-import MenuIcon from "@material-ui/icons/Menu";
+import List from "@material-ui/core/List";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./listItem";
-import Chart from "./Chart";
-import Deposits from "./Deposits";
-import Orders from "./Orders";
+import Fade from "@material-ui/core/Fade";
+import Paper from "@material-ui/core/Paper";
 
 function Copyright() {
   return (
@@ -38,7 +34,7 @@ function Copyright() {
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const styles = (theme) => ({
   root: {
     display: "flex",
   },
@@ -115,11 +111,33 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
-}));
+  backgroundIcon: {
+    display: "flex",
+    position: "relative",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: 100,
+  },
+  icon: {
+    position: "absolute",
+    width: 100,
+    height: 100,
+    borderRadius: "50%",
+    backgroundColor: "black",
+    top: -20,
+  },
+  iconContents: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+});
 
-export default function Dashboard() {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+const Dashboard = (props) => {
+  const { classes } = props;
+  const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -176,6 +194,21 @@ export default function Dashboard() {
             <ChevronLeftIcon />
           </IconButton>
         </div>
+        {open ? (
+          <div>
+            <Fade in={open} onEx>
+              <div>
+                <div className={classes.backgroundIcon}>
+                  <div className={classes.icon} />
+                </div>
+                <div className={classes.iconContents}>
+                  <div>Name</div>
+                  <div>Email</div>
+                </div>
+              </div>
+            </Fade>
+          </div>
+        ) : null}
         <Divider />
         <List>{mainListItems}</List>
         <Divider />
@@ -184,32 +217,36 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth={false} className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
+          {props.children}
         </Container>
       </main>
       <style jsx>{``}</style>
     </div>
   );
-}
+};
+
+export default withStyles(styles)(Dashboard);
+
+// <Grid container spacing={3}>
+//             {/* Chart */}
+//             <Grid item xs={12} md={8} lg={9}>
+//               <Paper className={fixedHeightPaper}>
+//                 <Chart />
+//               </Paper>
+//             </Grid>
+//             {/* Recent Deposits */}
+//             <Grid item xs={12} md={4} lg={3}>
+//               <Paper className={fixedHeightPaper}>
+//                 <Deposits />
+//               </Paper>
+//             </Grid>
+//             {/* Recent Orders */}
+//             <Grid item xs={12}>
+//               <Paper className={classes.paper}>
+//                 <Orders />
+//               </Paper>
+//             </Grid>
+//           </Grid>
+//           <Box pt={4}>
+//             <Copyright />
+//           </Box>
