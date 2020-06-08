@@ -8,7 +8,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
-import Link from "@material-ui/core/Link";
 import List from "@material-ui/core/List";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -17,7 +16,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { MainListItems, SecondaryListItems } from "./listItem";
 import Fade from "@material-ui/core/Fade";
-import Paper from "@material-ui/core/Paper";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 
 const drawerWidth = 240;
 
@@ -132,6 +132,20 @@ const styles = (theme) => ({
 const Dashboard = (props) => {
   const { classes } = props;
   const [open, setOpen] = useState(true);
+
+  // MenuList State
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openMenuList = Boolean(anchorEl);
+
+  // Function MenuList
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -174,7 +188,32 @@ const Dashboard = (props) => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <div className={classes.iconButton}></div>
+          <div
+            className={classes.iconButton}
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+          />
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={openMenuList}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
       <Drawer
