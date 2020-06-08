@@ -15,22 +15,9 @@ import Typography from "@material-ui/core/Typography";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./listItem";
+import { MainListItems, SecondaryListItems } from "./listItem";
 import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const drawerWidth = 240;
 
@@ -133,6 +120,13 @@ const styles = (theme) => ({
     alignItems: "center",
     marginBottom: 15,
   },
+  iconButton: {
+    width: 50,
+    height: 50,
+    borderRadius: "50%",
+    backgroundColor: "black",
+    marginLeft: theme.spacing(3),
+  },
 });
 
 const Dashboard = (props) => {
@@ -180,6 +174,7 @@ const Dashboard = (props) => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
+          <div className={classes.iconButton}></div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -196,7 +191,7 @@ const Dashboard = (props) => {
         </div>
         {open ? (
           <div>
-            <Fade in={open} onEx>
+            <Fade in={open}>
               <div>
                 <div className={classes.backgroundIcon}>
                   <div className={classes.icon} />
@@ -210,9 +205,13 @@ const Dashboard = (props) => {
           </div>
         ) : null}
         <Divider />
-        <List>{mainListItems}</List>
+        <List>
+          <MainListItems />
+        </List>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>
+          <SecondaryListItems />
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
