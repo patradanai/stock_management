@@ -15,6 +15,8 @@ import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import AvTimerIcon from "@material-ui/icons/AvTimer";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
+import AccessibilityIcon from "@material-ui/icons/Accessibility";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +38,8 @@ const MainListItems = () => {
     obj4: "Inspect Daily, PM",
     obj5: "Guide Book",
     obj6: "Analysis",
+    obj7: "Skill Map",
+    obj8: "Admin Panel",
   };
   // Reatime State
   const [openRealtime, setOpenRealtime] = useState(false);
@@ -47,6 +51,19 @@ const MainListItems = () => {
   const [openAnalyze, setOpenAnalyze] = useState(false);
   // GuideLine State
   const [openGuide, setOpenGuide] = useState(false);
+  // Skill Map State
+  const [openSkillMap, setOpenSkillMap] = useState(false);
+  // Admin Panel
+  const [openAdmin, setOpenAdmin] = useState(false);
+
+  // Function Admin
+  const handleAdmin = () => {
+    setOpenAdmin(!openAdmin);
+  };
+  // Function Realtime
+  const handleSkillMap = () => {
+    setOpenSkillMap(!openSkillMap);
+  };
 
   // Function Realtime
   const handleRealTime = () => {
@@ -154,6 +171,36 @@ const MainListItems = () => {
         {openAnalyze ? <ExpandMore /> : <ExpandLess />}
       </ListItem>
       <Collapse in={openAnalyze} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon></ListItemIcon>
+            <ListItemText primary="Starred" />
+          </ListItem>
+        </List>
+      </Collapse>
+      <ListItem button onClick={handleSkillMap}>
+        <ListItemIcon>
+          <AccessibilityIcon />
+        </ListItemIcon>
+        <ListItemText primary={objName.obj7} />
+        {openSkillMap ? <ExpandMore /> : <ExpandLess />}
+      </ListItem>
+      <Collapse in={openSkillMap} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon></ListItemIcon>
+            <ListItemText primary="Starred" />
+          </ListItem>
+        </List>
+      </Collapse>
+      <ListItem button onClick={handleAdmin}>
+        <ListItemIcon>
+          <SupervisorAccountIcon />
+        </ListItemIcon>
+        <ListItemText primary={objName.obj8} />
+        {openAdmin ? <ExpandMore /> : <ExpandLess />}
+      </ListItem>
+      <Collapse in={openAdmin} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button className={classes.nested}>
             <ListItemIcon></ListItemIcon>

@@ -18,7 +18,7 @@ import { MainListItems, SecondaryListItems } from "./listItem";
 import Fade from "@material-ui/core/Fade";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-
+import Paper from "@material-ui/core/Paper";
 const drawerWidth = 240;
 
 const styles = (theme) => ({
@@ -90,10 +90,13 @@ const styles = (theme) => ({
     paddingBottom: theme.spacing(4),
   },
   paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
+    width: 350,
+    minHeight: 150,
+    backgroundColor: "#F5F5F5",
+    opacity: 0.8,
+    position: "absolute",
+    bottom: -150,
+    left: -300,
   },
   fixedHeight: {
     height: 240,
@@ -134,8 +137,16 @@ const Dashboard = (props) => {
   const [open, setOpen] = useState(true);
 
   // MenuList State
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const openMenuList = Boolean(anchorEl);
+
+  // Popover Notification
+  const [openNoti, setOpenNoti] = useState(null);
+
+  //Function PopOver Notification
+  const handleNotification = () => {
+    setOpenNoti(!openNoti);
+  };
 
   // Function MenuList
   const handleMenu = (event) => {
@@ -183,10 +194,24 @@ const Dashboard = (props) => {
           >
             Dashboard
           </Typography>
-          <IconButton color="inherit">
+          <IconButton
+            color="inherit"
+            aria-describedby="popOverNotification"
+            onClick={handleNotification}
+            style={{ position: "relative" }}
+          >
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
+            {openNoti ? (
+              <Fade in={openNoti}>
+                <Paper
+                  className={classes.paper}
+                  variant="outlined"
+                  elevation={4}
+                ></Paper>
+              </Fade>
+            ) : null}
           </IconButton>
           <div
             className={classes.iconButton}
