@@ -14,7 +14,10 @@ import Typography from "@material-ui/core/Typography";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { MainListItems, SecondaryListItems } from "./listItem";
+import {
+  MainListItems,
+  SecondaryListItems,
+} from "../components/Dashboard/listItem";
 import Fade from "@material-ui/core/Fade";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
@@ -36,6 +39,7 @@ const styles = (theme) => ({
     ...theme.mixins.toolbar,
   },
   appBar: {
+    backgroundColor: theme.palette.primary.light,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
@@ -222,6 +226,7 @@ const Dashboard = (props) => {
           />
           <Menu
             id="menu-appbar"
+            TransitionComponent={Fade}
             anchorEl={anchorEl}
             anchorOrigin={{
               vertical: "top",
@@ -269,20 +274,16 @@ const Dashboard = (props) => {
           </div>
         ) : null}
         <Divider />
-        <List>
-          <MainListItems />
-        </List>
-        <Divider />
-        <List>
-          <SecondaryListItems />
-        </List>
+        <div onClick={handleDrawerOpen}>
+          <List>
+            <MainListItems />
+          </List>
+          <Divider />
+          <List>
+            <SecondaryListItems />
+          </List>
+        </div>
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth={false} className={classes.container}>
-          {props.children}
-        </Container>
-      </main>
       <style jsx>{``}</style>
     </div>
   );
